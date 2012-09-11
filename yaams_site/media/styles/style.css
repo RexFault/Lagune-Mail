@@ -1,0 +1,97 @@
+html {
+	min-height: 800px;
+}
+
+body {
+	width: 700px;
+	min-height: 800px;
+	margin-left: auto;
+	margin-right: auto;
+        background-color: #000000;
+        color: #FFF;
+}
+
+#wrapper {
+    background-color: #222;
+}
+
+#banner {
+	text-align: center;
+        height: 150px;
+        border-bottom: #000000 solid 1px;
+}
+
+nav {
+
+	float: left;
+	width: 190px;
+	text-align: center;
+	min-height: 600px;
+}
+
+nav ul {
+    list-style: none;
+    text-align: left;
+    margin-left: 15px;
+}
+
+a, a:link, a:active, a:visited {
+    color: #ff6633;
+}
+
+.colorize {
+    color: #ff6633;
+    font-weight: +.5em
+}
+
+a:hover {
+    color: #ff9900;
+}
+
+h1 { 
+    font-size: +1em;
+    font-weight: bold;
+}
+
+h2 {
+	font-size: +1em;
+	font-weight: bold;
+	display: inline;
+}
+
+nav h1 {
+
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table  tr:hover {
+	background-color: #666;
+}
+
+table tr td a:link, table tr td a:active, table tr td a:visited {
+	color: #FFF;
+	text-decoration: none;
+}
+
+table tr td a:hover {
+	color: #ff9900;
+	text-decoration: none;
+}
+
+#content {
+	float: left;
+	width: 494px;
+	min-height: 600px;
+        padding-left: 10px;
+        border-left: #000 solid 1px;
+}
+
+#footer {
+	clear: left;
+	text-align: center;
+        font-size: 8pt;
+        border-top: #000 solid 1px;
+}

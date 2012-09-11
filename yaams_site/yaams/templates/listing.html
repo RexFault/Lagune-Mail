@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Check inbox</h1>
+<table width='100%'>
+    <tr>
+	<th>Subject</th>
+	<th>From</th>
+	<th>Recieved</th>
+    </tr>
+{% for m in messages %}
+    {% url check_message email m.msg_id as link %}
+    <tr>
+	<td><a href='{{link}}'>{{ m.get_subject }}</a></td>
+	<td>{{ m.get_sender }}</td>
+	<td>{{ m.get_received_date }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

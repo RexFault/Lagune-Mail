@@ -1,0 +1,8 @@
+screen
+title "Memcached"
+exec "/home/yaams/yaams_chron/start_memcached.sh"
+screen
+title "Yaams Inbox Daemon"
+exec "/home/yaams/yaams_chron/start_yaams_daemon.sh"
+
+

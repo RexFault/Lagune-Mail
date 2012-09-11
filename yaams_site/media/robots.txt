@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /check_message/
+Disallow: /check_inbox/
+

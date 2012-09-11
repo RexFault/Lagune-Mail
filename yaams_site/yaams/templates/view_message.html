@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+{% if not msg_user_exists %}
+<h1 align='center'> Sorry but that user or message doesn't exist!</h1>
+{% else %}
+<h1>View Message</h1>
+<h2>From:</h2> {{ message.get_sender }}<br />
+<h2>Subject:</h2> {{ message.get_subject }}<br />
+<h2>Content:</h2><br />
+<p> 
+{% autoescape off %}
+{{ message.get_content }}
+{% endautoescape %}
+</p>
+{% endif %}
+{% endblock %}

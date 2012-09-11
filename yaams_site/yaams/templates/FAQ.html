@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for item in faqs %}
+<h1>{{item.question}}</h1>
+<p>{{item.answer}}</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} {{ title }} {% endblock %}</title>
+	<link href="/styles/style.css" rel="stylesheet" type="text/css">
+        {% block head %} {{ head_extra }} {% endblock %}
+</head>
+<body>
+    <div id="wrapper">
+	<div id='banner'><img src="/images/banner.png"></div>
+	
+	<nav>
+                <h1>Navigation</h1>
+		<ul>
+			<li><a href='/'>Home</a></li>
+			<li><a href='{% url about_page %}'>About</a></li>
+			<li><a href='{% url faq_page %} '>FAQ</a></li>
+		</ul>
+		<h1>Check Address</h1>
+		<form action='/check_email/' method='post'>
+                        {% csrf_token %}
+			<label>Email Address: <input type='text' name='email_addr' id='email_addr'></label>
+			<input type='submit' value='Check Mail'>
+		</form>
+	
+		<h1>Affiliates</h1>
+		<a href="http://www.privatetunnels.com/aff.php?aff=006"><img src="/images/250x250.png" border="0" width='110px'></a>
+
+	</nav>
+	
+	
+	<div id='content'>
+            {% block content %}
+             {{ content|safe }}
+            {% endblock %}
+	</div>
+	
+	<div id='footer'>
+		Copyright &copy 2012 Lagune-Software
+	</div>
+    </div>
+</body>
+</html>
