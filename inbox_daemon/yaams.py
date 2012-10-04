@@ -5,8 +5,8 @@ import memcache
 #Change the following list to include the domains you want to allow mail to be sent to
 #If a message is sent to the server and the target users domains isn't one of the following domains it will be
 #rejected
-valid_domains = ['yaams.lagune-software.com']
-PU_DBG = False
+valid_domains = ['yaams.lagune-software.com', 'gizmo.lagune-software.com', 'gizmo.packetunderground.com']
+PU_DBG = True
 
 class PU_SMTPResponses():
 	""" A simple class that contains a couple of message responses used in PU_SMTPServer()"""

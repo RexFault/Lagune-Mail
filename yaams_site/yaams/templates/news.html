@@ -1,14 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1 align='center'>Check Address</h1>
-    <center>
-	<form action='/check_email/' method='post'>
-            {% csrf_token %}
-            <label>Email Address: <input type='text' name='email_addr' id='email_addr'></label>
-            <input type='submit' value='Check Mail'>
-	</form>
-    </center>
-    <hr style="color: black; border: 1px solid; margin-top: 30px; margin-bottom: 30px;" />
     <h1>Website News</h1>
     {% if news_items|length > 0 %}
         {% for post in news_items %}

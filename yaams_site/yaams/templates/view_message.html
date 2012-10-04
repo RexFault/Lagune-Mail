@@ -7,6 +7,16 @@
 <h2>From:</h2> {{ message.get_sender }}<br />
 <h2>Subject:</h2> {{ message.get_subject }}<br />
 <h2>Content:</h2><br />
+<form action="{% url send_message %}" method="post" id="reply_form" name="reply_form">
+    {% csrf_token %}
+    <input type='hidden' name="source_address" id="source_address" value="{{source_address}}" />
+    <input type="hidden" name="target_address" id="target_address" value="{{message.get_sender}}" />
+    <input type="hidden" name="subject" id="subject" value="RE: {{ message.get_subject }}" />
+</form>
+<span id="msg_links">
+    <a href="{% url delete_message email_address msg_id %}">Delete Message</a>
+    <a href="#" onclick="document.reply_form.submit()">Reply</a>
+</span>
 <p> 
 {% autoescape off %}
 {{ message.get_content }}

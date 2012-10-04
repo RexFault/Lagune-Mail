@@ -95,3 +95,9 @@ table tr td a:hover {
         font-size: 8pt;
         border-top: #000 solid 1px;
 }
+
+#msg_links { 
+
+    font-size: 10pt;
+    
+}

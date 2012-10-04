@@ -13,8 +13,12 @@
                 <h1>Navigation</h1>
 		<ul>
 			<li><a href='/'>Home</a></li>
+                        <li><a href="{% url protect_email %}">Protect Address</a></li>
+                        <li><a href="{% url send_message %}">Send Message</a></li>
+                        <li><a href="http://lagune-software.com/">Lagune Software</a></li>
 			<li><a href='{% url about_page %}'>About</a></li>
 			<li><a href='{% url faq_page %} '>FAQ</a></li>
+                        <li><a href="{% url logout %}">Logout</a></li>
 		</ul>
 		<h1>Check Address</h1>
 		<form action='/check_email/' method='post'>

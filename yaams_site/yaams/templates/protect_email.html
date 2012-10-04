@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Create/Modify Password Password</h1>
+<p>
+    {{ error_msg }}
+    <form action='' method="post">
+        <label>Email Address: <input type='text' name="email_address" id="email_address" value="{{email_address}}" /></label><br />
+        <label>New Password: <input type='password' name="new_password" id="new_password" /></label><br />
+        <label>Retype New Password: <input type="password" name='verify_password' id="verify_password" /></label><br />
+        <label>Existing Password<span style="color: red;">**</span>: <input type='password' id="password" name="password" /></label><br />
+        {% csrf_token %}
+        <input type='submit' /><br /><br />
+        <span style='color: red'>** </span> Only required if a password is already set on the address.<br />
+    </form>
+</p>
+{% endblock %}

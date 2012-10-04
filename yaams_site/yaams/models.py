@@ -1,11 +1,12 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 import memcache
 import email
 import yaams_exceptions
 import logging
 import textwrap
-from utils import nl2br, escape
+from utils import nl2br, escape, check_password, make_hash, parse_hash
 import types
 import json
 
@@ -28,7 +29,70 @@ class NewsPost(models.Model):
         
     def __str__(self):
         return self.name
+
+class EmailUser(models.Model):
+    """
+    Represents a unique email user in a database. Allows us to check for various attributes of the email addresses inbox.
+    """
+    email_address = models.CharField(max_length = 257)
+    password_protected = models.BooleanField(default = False)
+    password_hash = models.CharField(max_length=52)
+            
+    def __str__(self):
+        return self.email_address
+    @staticmethod
+    def get_obj(email_addr):
+        try:
+            return EmailUser.objects.get(email_address = email_addr)
+        except ObjectDoesNotExist:
+            u = EmailUser(email_address = email_addr, password_protected = False, password_hash = '')
+            u.save()
+            u.user_mailbox = None
+            return u
+            
+    def check_password(self, password):
+        """
+        Checks the supplied password against the stored password in the database
+        returns True if they match, False otherwise
+        """
+        return check_password(password, self.password_hash, settings.INBOX_SETTINGS['hash_secret'])
     
+    def fetch_inbox(self):
+        return Mailbox(self.email_address)
+            
+    def get_inbox(self, password = ''):
+        if self.has_password():
+            if self.check_password(password):
+                return self.fetch_inbox()
+            else:
+                raise yaams_exceptions.PasswordProtected(self.email_address)
+        else:
+            return self.fetch_inbox()
+
+        
+    def has_password(self):
+        return self.password_protected
+    
+    def set_password(self, password):
+        """
+        Sets a password on a the inbox that this instance represents.
+        password -- plaintext string representation of the password
+        """
+        if self.has_password():
+            #We already have a password and a salt ^_^
+            hash, salt = parse_hash(self.password_hash)
+            new_hash = make_hash(settings.INBOX_SETTINGS['hash_secret'], password, salt)
+            self.password_hash = new_hash
+            self.save()
+        else:
+            #We never had a password or don't have one set atm
+            new_hash = make_hash(settings.INBOX_SETTINGS['hash_secret'], password)
+            #i = EmailUser(email_address = self.email_address, password_protected = True, password_hash = new_hash)
+            #i.save()
+            self.password_protected = True
+            self.password_hash = new_hash
+            self.save()
+            
 
 class Mailbox:
 	"""Represents a single users mailbox in a memcached instance. MemCacheInstance is a Static or Class variable that is accessible by all instances"""
@@ -114,6 +178,26 @@ class Mailbox:
 		and as such this mark_message_read() function won't be used at the moment but a placeholder is here for future expansion.
 		"""
 		pass
+        
+        def delete_message(self, msg_id):
+            """
+            Deletes a message from the users inbox.
+            
+            Returns True on success or False on error
+            """
+            msg_id = int(msg_id)
+            for i in range(0, len(self.mail_list)):
+                tMsg = Message(self.mail_list[i])
+                
+                #logger = logging.getLogger('django.request')
+                #logger.debug('tMsg ID is ' + str(tMsg.get_id()))
+                #logger.debug('Search ID is ' + str(msg_id))
+                
+                if tMsg.get_id() == msg_id:
+                    del self.mail_list[i]
+                    Mailbox.MemCacheInstance.set(self.email_address, self.mail_list)
+                    return True
+            return False
 
 class Message:
 	"""Encapsulages the email packet and adds a little bit of customization such as get_readstate()"""

@@ -9,24 +9,36 @@ MEMCACHE = {
 	'debug' : 0, #1 if you wish to see memcache output when the server is unable to be contacted
 }
 
+INBOX_SETTINGS = {
+    'hash_secret' : "SUPER SECRET HASH HERE!",
+}
+
 # Put Your Website Title here!!
 WEBSITE_TITLE = "YAAMS -- Yet Another Anonymous Mail System!" 
 TEMPLATE_DIR = '/home/yaams/yaams/yaams_site/yaams/templates' #PUT THE FULL PATH OF THE TEMPLATE DIRECTORY HERE!!!
 
 # STUFF THAT SHOULD BE HERE FOR LOGGING ERRORS TO EMAIL!!!
-SERVER_EMAIL = 'xxxxxx'
+SERVER_EMAIL = 'shmcinto@gmail.com'
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
-EMAIL_HOST = "xxxxx"
-EMAIL_PORT  = "xxxxxxxxxxxxxx"
-EMAIL_HOST_USER = "xxxxxxx"
+EMAIL_HOST = "smtp.googlemail.com"
+EMAIL_PORT  = "465"
+EMAIL_HOST_USER = "shmcinto@gmail.com"
 EMAIL_HOST_PASSWORD = "xxxx" #CHANGE THIS BEFORE COMMIT!
 EMAIL_SUBJECT_PREFIX  = "[YAAMS ERROR] -- "
 
-#FOOLISH DJANGO CREATORS NEGLECTED INCLUDING THIS COMMENT BY DEFAULT!!!
-#THIS IS FOR SENDING EMAIL TO ADMINS WHEN AN ERROR OCCURS IN PRODUCTSION!!!!
-#IDIOTS.... THAT MIGHT BE IMPORTANT IDK FUCKERS
+
+# These are the Server Settings used for sending emails from this web app.
+SMTP_SETTINGS = {
+
+    'SERVER' : 'packetunderground.com',
+    'PORT' : 25,
+    'USERNAME' : 'shane@packetunderground.com',
+    'PASSWORD' : 'EMAIL PASSWORD HERE',
+
+}
+#THIS IS FOR SENDING EMAIL TO ADMINS WHEN AN ERROR OCCURS IN PRODUCTION!!!!
 ADMINS = (
-    ('xxxxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxx'),
+    ('Shane McIntosh', 'shmcinto@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -34,9 +46,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'xxxxxxxxxxxxxxxxxx',                      # Or path to database file if using sqlite3.
-        'USER': 'xxxxxxxxxxxxxxxx',                      # Not used with sqlite3.
-        'PASSWORD': 'xxxxxxxxxxxxxxxxxxxxx',                  # Not used with sqlite3.
+        'NAME': 'yaams_db',                      # Or path to database file if using sqlite3.
+        'USER': 'yaams_user',                      # Not used with sqlite3.
+        'PASSWORD': 'DB PASSWORD HERE',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -103,7 +115,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+SECRET_KEY = 'af1)br4#beiwdp59731-4)c@%yk4to9*ani2e$1y087zb=f%8y'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -189,3 +201,8 @@ LOGGING = {
         },
     }
 }
+
+
+#SESSION ENGINE Configuration
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_HTTPONLY = True
